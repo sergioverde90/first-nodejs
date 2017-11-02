@@ -6,5 +6,5 @@
 
 ## How to build
 ```bash
-docker-compose build && docker-compose up -d
+sh start-stack.sh
 ```
