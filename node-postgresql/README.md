@@ -1,6 +1,6 @@
 # NODEJS + POSTGRESQL CONNECTION EXAMPLE
 
-## Prerrequisites
+## Prerequisites
 * Docker engine +17.03
 * Docker compose 
 
