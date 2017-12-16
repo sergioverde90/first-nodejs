@@ -10,7 +10,7 @@ function api() { return graphql(SCHEMA, `{ idUser }` , lookupUser()); }
 
 function lookupUser() {
     // some lookup ...
-    var user = {
+    return {
         idUser : () => "1",
         name : () => "Sergio"
     }
