@@ -32,7 +32,7 @@ const userSchema = new GraphQLObjectType({
 const UserQueryRootType = new GraphQLObjectType({
     name : "userRootType",
     fields : () => ({
-        users : {
+        'users' : {
             type : new GraphQLList(userSchema),
             description : "LIST OF USERS",
             resolve : () => allUsers
@@ -40,22 +40,6 @@ const UserQueryRootType = new GraphQLObjectType({
     })
 })
 
-const USER_SCHEMA = new GraphQLSchema({
-    query : UserQueryRootType
-})
+const USER_SCHEMA = new GraphQLSchema({ query : UserQueryRootType })
 
-/** 
- * ================================
- * CLIENT 
- * ================================
- */
-const query_users = `{ 
-    users {
-        id
-    } 
-}`;
-
-function api() { return graphql(USER_SCHEMA, query_users, allUsers); }
-
-// call endpoint to retrive data
-api().then(r => console.log(r.data));
+module.exports = USER_SCHEMA;
