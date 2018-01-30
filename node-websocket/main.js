@@ -1,23 +1,34 @@
-var socket;
+const Connection = function() {
+    let socket;
+    return {
+        connect : (url) => {
+            this.socket = new WebSocket(url);
+            this.socket.addEventListener('open', (event) => { console.log('connection established!'); });
+            this.socket.onerror = (err) =>  { console.error("connection error => ", err); };
+        },
+        send : (data) => {
+            this.socket.send(data);
+        },
+        test : () => {
+            this.socket.send('test connection');
+        },
+        on : (action, callback) => {
+            this.socket.addEventListener(action, callback);
+        },
+        close : () => {
+            this.socket.close();
+        }
+    }
+}();
 
 function connect() {
-    socket = new WebSocket('ws://192.168.1.123:8080');
-    console.log(socket.readyState);
-    socket.addEventListener('open', (event) => {
-        console.log('opened');
-        socket.send('jaaaaaaaaaaaaaaaaa');
-        socket.send('Hello Server!');
-    });
-    
-    socket.onerror = (err) => {console.log(err)};
-    socket.addEventListener('message', (event) => {
-        document.getElementById('shared').value = event.data;
-    });
+    Connection.connect('ws://192.168.1.123:8080');
+    Connection.on('message', (event) => { document.getElementById('shared').value = event.data; })
     document.getElementById('shared').disabled = false;
     document.getElementById('btn-connect').disabled = true;
 }
 
 function modify(event) {
     const text = event.target.value;
-    socket.send('' + text);
+    Connection.send(text);
 }
